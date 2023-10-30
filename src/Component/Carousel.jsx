@@ -12,15 +12,21 @@ import { AiOutlineStar } from "react-icons/ai";
 import axios from "axios";
 
 const Carousel = () => {
-  const apiKey = `https://api.themoviedb.org/3/movie/top_rated?api_key=4c75c05966be2f9ad7d0c95e79df2726&language=en-US&page=1`;
+  const accessToken = `eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxZWE5OTU3MTEyN2MzZWZkY2U2Mjk0ZGFkMTI3YTI1YyIsInN1YiI6IjY0ZmVjOWIwZGI0ZWQ2MTAzNDNlZjZjMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1Rd3o-_G81PdtVfr-TaM0AzlY8GjfwWpEUGcgHFlanI`;
   const [movies, setMovies] = useState([]);
 
-  // useEffect(() => {
-  //   axios.get(`${apiKey}`).then((response) => {
-  //     setMovies(response.data);
-  //   });
-  // }, []);
-  // console.log(movies.results);
+  const headers = {
+    Authorization: `Bearer ${accessToken}`,
+  };
+
+  useEffect(() => {
+    axios
+      .get("https://api.themoviedb.org/3/movie/top_rated", { headers })
+      .then((response) => {
+        setMovies(response.data.results.slice(0, 4));
+        console.log(response.data);
+      });
+  }, []);
 
   const settings = {
     dots: true,
@@ -60,11 +66,11 @@ const Carousel = () => {
     <>
       <div>
         <Slider {...settings}>
-          {movies?.results?.map((item, i) => (
-            <div className="relative w-full h-[100vh] flex flex-col bg-blue-900/30 mt-3 md:mt-5">
+          {movies?.map((item, i) => (
+            <div className="relative w-full h-[100vh] flex flex-col bg-blue-400/30 mt-3 md:mt-5">
               <img
-                src={`https://image.tmdb.org/t/p/w500/${item.poster_path}`}
-                className=" absolute -z-10 w-[100%] h-[50vh]  object-cover bg-cover bg-center "
+                src={`https://image.tmdb.org/t/p/w500/${item.backdrop_path}`}
+                className=" absolute -z-10 w-[100%] h-[100vh]  object-cover bg-center bg-cover "
               />
               <div className="flex justify-center pt-[80px] md:pt-[150px]">
                 <button className="text-[12px] md:text-xl bg-[red] text-white font-bold py-3 px-3 rounded-sm flex items-center hover:bg-red-300">
