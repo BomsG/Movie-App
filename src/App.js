@@ -1,13 +1,15 @@
 import React from "react";
 import Navbar from "./Component/Navbar";
-import Update from "./Component/Update";
 import Carousel from "./Component/Carousel";
+import Card from "./Component/Card";
 
 function App() {
   return (
     <div>
       <Navbar />
+
       <Carousel />
+      <Card />
     </div>
   );
 }

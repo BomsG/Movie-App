@@ -67,11 +67,13 @@ const Carousel = () => {
       <div>
         <Slider {...settings}>
           {movies?.map((item, i) => (
-            <div className="relative w-full h-[100vh] flex flex-col bg-blue-400/30 mt-3 md:mt-5">
-              <img
-                src={`https://image.tmdb.org/t/p/w500/${item.backdrop_path}`}
-                className=" absolute -z-10 w-[100%] h-[100vh]  object-cover bg-center bg-cover "
-              />
+            <div className="relative w-full h-[100vh] flex flex-col bg-pink-400/20 mt-3 md:mt-5">
+              <div className="flex justify-center">
+                <img
+                  src={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
+                  className=" absolute -z-10 w-[100%] h-[100vh]  object-cover bg-center bg-cover"
+                />
+              </div>
               <div className="flex justify-center pt-[80px] md:pt-[150px]">
                 <button className="text-[12px] md:text-xl bg-[red] text-white font-bold py-3 px-3 rounded-sm flex items-center hover:bg-red-300">
                   Watch Movie <BiCaretRightCircle color="white" size={20} />
@@ -93,11 +95,13 @@ const Carousel = () => {
                   ))}
                   <div className="flex items-center pt-5 pl--0 md:pl-5 ">
                     <SlCalender size={20} />
-                    <h1 className="text-xl px-5">2022</h1>
+                    <h1 className="text-xl px-5">
+                      {item.release_date.slice(0, 4)}
+                    </h1>
                     <MdOutlineWatchLater size={20} />
-                    <h1 className="px-4 text-xl">3:12:00</h1>
+                    <h1 className="px-4 text-xl">{item.vote_count}</h1>
                     <AiOutlineStar size={20} />
-                    <h1 className="px-4 text-xl">8.5</h1>
+                    <h1 className="px-4 text-xl">{item.vote_average}</h1>
                   </div>
                 </div>
                 <p className="w-full md:w-[700px] text-sm md:text-lg pt-5 text-center md:text-left">
