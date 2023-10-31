@@ -67,7 +67,7 @@ const Carousel = () => {
       <div>
         <Slider {...settings}>
           {movies?.map((item, i) => (
-            <div className="relative w-full h-[100vh] flex flex-col bg-pink-400/20 mt-3 md:mt-5">
+            <div className="relative w-full h-[100vh] flex flex-col bg-blue-700/20 mt-3 md:mt-5">
               <div className="flex justify-center">
                 <img
                   src={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
@@ -87,7 +87,7 @@ const Carousel = () => {
                 <h1 className=" font-bold text-4xl  text-center md:text-left">
                   {item.title}
                 </h1>
-                <div className="flex flex-wrap items-center">
+                <div className="flex flex-wrap items-center justify-center md:left">
                   {li.map((li) => (
                     <button className="bg-white rounded-xl text-black text-sm font-bold mr-2 mt-5 py-2 px-2 hover:bg-gray-400">
                       {li}
