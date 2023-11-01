@@ -60,7 +60,7 @@ const Update = () => {
   return (
     <>
       <div className="ml-4 md:ml-[120px]">
-        <h2> Responsive </h2>
+        <h2 className="font-bold"> Recentlu Uploaded</h2>
 
         <div className="my-4 flex ">
           {movies?.map((item, i) => (

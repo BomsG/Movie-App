@@ -10,6 +10,13 @@ import { SlCalender } from "react-icons/sl";
 import { MdOutlineWatchLater } from "react-icons/md";
 import { AiOutlineStar } from "react-icons/ai";
 import axios from "axios";
+import Loading from "./Loading";
+import Update from "./Update";
+import Recommended from "./Recommended";
+import Card from "./Card";
+import Series from "./Series";
+import Rseries from "./Rseries";
+import Release from "./Release";
 
 const Carousel = () => {
   const accessToken = `eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxZWE5OTU3MTEyN2MzZWZkY2U2Mjk0ZGFkMTI3YTI1YyIsInN1YiI6IjY0ZmVjOWIwZGI0ZWQ2MTAzNDNlZjZjMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1Rd3o-_G81PdtVfr-TaM0AzlY8GjfwWpEUGcgHFlanI`;
@@ -21,9 +28,9 @@ const Carousel = () => {
 
   useEffect(() => {
     axios
-      .get("https://api.themoviedb.org/3/movie/popular", { headers })
+      .get("https://api.themoviedb.org/3/tv/popular", { headers })
       .then((response) => {
-        setMovies(response.data.results.slice(0, 5));
+        setMovies(response.data.results.slice(1, 9));
         console.log(response.data);
       });
   }, []);
@@ -67,7 +74,7 @@ const Carousel = () => {
       <div>
         <Slider {...settings}>
           {movies?.map((item, i) => (
-            <div className="relative w-full h-[80vh] md:h-[100vh] flex  mt-3 md:mt-5 bg-gray-900/30">
+            <div className="relative w-full h-[80vh] md:h-[100vh] flex  mt-3 md:mt-5 bg-blue-900/30">
               <div className="flex justify-center">
                 <img
                   src={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
@@ -85,7 +92,7 @@ const Carousel = () => {
               </div>
               <div className=" p-0 md:pl-20 pt-10 ">
                 <h1 className=" font-bold text-4xl  text-center md:text-left">
-                  {item.title}
+                  {item.name}
                 </h1>
                 <div className="flex flex-wrap items-center justify-center md:justify-start">
                   {li.map((li) => (
@@ -95,9 +102,7 @@ const Carousel = () => {
                   ))}
                   <div className="flex items-center pt-5 pl--0 md:pl-5 ">
                     <SlCalender size={20} />
-                    <h1 className="text-xl px-5">
-                      {item.release_date.slice(0, 4)}
-                    </h1>
+                    <h1 className="text-xl px-5">{item.release_date}</h1>
                     <MdOutlineWatchLater size={20} />
                     <h1 className="px-4 text-xl">{item.vote_count}</h1>
                     <AiOutlineStar size={20} />
@@ -112,6 +117,12 @@ const Carousel = () => {
           ))}
         </Slider>
       </div>
+      <Update />
+      <Card />
+      <Release />
+      <Series />
+      <Recommended />
+      <Rseries />
     </>
   );
 };
