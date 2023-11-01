@@ -17,6 +17,8 @@ import Card from "./Card";
 import Series from "./Series";
 import Rseries from "./Rseries";
 import Release from "./Release";
+import Navbar from "./Navbar";
+import { Link } from "react-router-dom";
 
 const Carousel = () => {
   const accessToken = `eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxZWE5OTU3MTEyN2MzZWZkY2U2Mjk0ZGFkMTI3YTI1YyIsInN1YiI6IjY0ZmVjOWIwZGI0ZWQ2MTAzNDNlZjZjMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1Rd3o-_G81PdtVfr-TaM0AzlY8GjfwWpEUGcgHFlanI`;
@@ -71,52 +73,56 @@ const Carousel = () => {
   const li = ["Action", "Adventure", "Science-Fiction"];
   return (
     <>
+      <Navbar />
       <div>
         <Slider {...settings}>
           {movies?.map((item, i) => (
             <div className="relative w-full h-[80vh] md:h-[100vh] flex  mt-3 md:mt-5 bg-blue-900/30">
-              <div className="flex justify-center">
-                <img
-                  src={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
-                  className=" absolute -z-10 w-[100%] h-[100vh]  object-cover bg-center bg-cover "
-                />
-              </div>
-              <div className="flex justify-center pt-[80px] md:pt-[150px]">
-                <button className="text-[12px] md:text-xl bg-[red] text-white font-bold py-3 px-3 rounded-sm flex items-center hover:bg-red-300">
-                  Watch Now <BiCaretRightCircle color="white" size={20} />
-                </button>
-                <button className="text-[12px] md:text-xl ml-4 border-2 border-red-600 font-bold py-3 px-3 rounded-sm flex items-center hover:bg-red-300">
-                  Watch Later
-                  <BsFillStopwatchFill color="white" className="ml-2" />
-                </button>
-              </div>
-              <div className=" p-0 md:pl-20 pt-10 ">
-                <h1 className=" font-bold text-4xl  text-center md:text-left">
-                  {item.name}
-                </h1>
-                <div className="flex flex-wrap items-center justify-center md:justify-start">
-                  {li.map((li) => (
-                    <button className="bg-white rounded-xl text-black text-sm font-bold mr-2 mt-5 py-2 px-2 hover:bg-gray-400">
-                      {li}
-                    </button>
-                  ))}
-                  <div className="flex items-center pt-5 pl--0 md:pl-5 ">
-                    <SlCalender size={20} />
-                    <h1 className="text-xl px-5">{item.release_date}</h1>
-                    <MdOutlineWatchLater size={20} />
-                    <h1 className="px-4 text-xl">{item.vote_count}</h1>
-                    <AiOutlineStar size={20} />
-                    <h1 className="px-4 text-xl">{item.vote_average}</h1>
-                  </div>
+              <Link to="details">
+                <div className="flex justify-center">
+                  <img
+                    src={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
+                    className=" absolute -z-10 w-[100%] h-[100vh]  object-cover bg-center bg-cover "
+                  />
                 </div>
-                <p className="w-full md:w-[700px] text-sm md:text-lg pt-5 text-center md:text-left">
-                  {item.overview}
-                </p>
-              </div>
+                <div className="flex justify-center pt-[80px] md:pt-[150px]">
+                  <button className="text-[12px] md:text-xl bg-[red] text-white font-bold py-3 px-3 rounded-sm flex items-center hover:bg-red-300">
+                    Watch Now <BiCaretRightCircle color="white" size={20} />
+                  </button>
+                  <button className="text-[12px] md:text-xl ml-4 border-2 border-red-600 font-bold py-3 px-3 rounded-sm flex items-center hover:bg-red-300">
+                    Watch Later
+                    <BsFillStopwatchFill color="white" className="ml-2" />
+                  </button>
+                </div>
+                <div className=" p-0 md:pl-20 pt-10 ">
+                  <h1 className=" font-bold text-4xl  text-center md:text-left">
+                    {item.name}
+                  </h1>
+                  <div className="flex flex-wrap items-center justify-center md:justify-start">
+                    {li.map((li) => (
+                      <button className="bg-white rounded-xl text-black text-sm font-bold mr-2 mt-5 py-2 px-2 hover:bg-gray-400">
+                        {li}
+                      </button>
+                    ))}
+                    <div className="flex items-center pt-5 pl--0 md:pl-5 ">
+                      <SlCalender size={20} />
+                      <h1 className="text-xl px-5">{item.release_date}</h1>
+                      <MdOutlineWatchLater size={20} />
+                      <h1 className="px-4 text-xl">{item.vote_count}</h1>
+                      <AiOutlineStar size={20} />
+                      <h1 className="px-4 text-xl">{item.vote_average}</h1>
+                    </div>
+                  </div>
+                  <p className="w-full md:w-[700px] text-sm md:text-lg pt-5 text-center md:text-left">
+                    {item.overview}
+                  </p>
+                </div>
+              </Link>
             </div>
           ))}
         </Slider>
       </div>
+
       <Update />
       <Card />
       <Release />
