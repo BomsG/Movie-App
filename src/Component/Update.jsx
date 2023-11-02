@@ -17,7 +17,6 @@ const Update = () => {
       .get("https://api.themoviedb.org/3/movie/popular", { headers })
       .then((response) => {
         setMovies(response.data.results.slice(0, 6));
-        console.log(response.data);
       });
   }, []);
 
@@ -64,7 +63,7 @@ const Update = () => {
 
         <div className="my-4 flex ">
           {movies?.map((item, i) => (
-            <div className="flex mx-3 items-center">
+            <div className="flex mx-3 items-center" key={i}>
               <img
                 src={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
                 className="w-[50px] h-[80px] rounded-xl object-cover"

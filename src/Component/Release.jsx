@@ -13,7 +13,6 @@ const Release = () => {
       .get("https://api.themoviedb.org/3/movie/popular", { headers })
       .then((response) => {
         setMovies(response.data.results.slice(0, 3));
-        console.log(response.data);
       });
   }, []);
   const headers = {

@@ -19,8 +19,11 @@ const Navbar = () => {
     <>
       <div className="flex items-center justify-none md:justify-center mt-5 mx-10 ">
         <ul className="flex">
-          {list.map((list) => (
-            <li className="mr-2 hover:border-b hover:border-red-600 hidden md:block">
+          {list.map((list, i) => (
+            <li
+              key={i}
+              className="mr-2 hover:border-b hover:border-red-600 hidden md:block"
+            >
               {list}
             </li>
           ))}
@@ -36,13 +39,15 @@ const Navbar = () => {
           <AiOutlineSearch id="search" color="black" />
         </div>
         <ul className="flex mr-3">
-          {list2.map((list2) => (
-            <li className="ml-2 hidden md:block">{list2}</li>
+          {list2.map((list2, i) => (
+            <li className="ml-2 hidden md:block" key={i}>
+              {list2}
+            </li>
           ))}
         </ul>
         <select className="border border-white bg-transparent font-bold hidden md:hidden w-[50px]">
-          {mainLi.map((mainLi) => (
-            <option value="movie" className="bg-black">
+          {mainLi.map((mainLi, i) => (
+            <option value="movie" className="bg-black" key={i}>
               {mainLi}
             </option>
           ))}

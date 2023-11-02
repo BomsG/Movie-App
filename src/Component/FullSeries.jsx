@@ -15,7 +15,6 @@ const FullSeries = () => {
       .get("https://api.themoviedb.org/3/tv/popular", { headers })
       .then((response) => {
         setMovies(response.data.results);
-        console.log(response.data);
       });
   }, []);
   const headers = {
@@ -34,7 +33,7 @@ const FullSeries = () => {
         </Link>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-5 ">
           {movies?.map((item, i) => (
-            <div className="">
+            <div className="" key={i}>
               <div className=" mr-5 hover:scale-105 ease-in-out duration-500 w-{500px} md:w-full">
                 <img
                   src={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}

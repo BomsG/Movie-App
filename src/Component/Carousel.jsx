@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { useEffect, useState } from "react";
 import Slider from "react-slick";
 import heroImg from "../images/Rectangle 2.png";
-import main2 from "../images/main2.webp";
-import main from "../images/main2.webp";
 import { BiCaretRightCircle } from "react-icons/bi";
 import { BsFillStopwatchFill } from "react-icons/bs";
 import { SlCalender } from "react-icons/sl";
@@ -30,15 +28,31 @@ const Carousel = () => {
 
   useEffect(() => {
     axios
-      .get("https://api.themoviedb.org/3/tv/popular", { headers })
+      .get("https://api.themoviedb.org/3/tv/top_rated", {
+        headers,
+      })
       .then((response) => {
-        setMovies(response.data.results.slice(1, 9));
-        console.log(response.data);
+        const movie = response.data.results.slice(0, 6);
+
+        movie.map((item) => {
+          axios
+            .get(`https://api.themoviedb.org/3/tv/${item.id}?language=en-US`, {
+              headers,
+            })
+            .then((response) => {
+              console.log(response);
+              setMovies((prevMovie) => [...prevMovie, response.data]);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        });
       });
   }, []);
+  console.log(movies);
 
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     lazyLoad: true,
     speed: 500,
@@ -77,8 +91,11 @@ const Carousel = () => {
       <div>
         <Slider {...settings}>
           {movies?.map((item, i) => (
-            <div className="relative w-full h-[80vh] md:h-[100vh] flex  mt-3 md:mt-5 bg-blue-900/30">
-              <Link to="details">
+            <div
+              key={i}
+              className="relative w-full h-[80vh] md:h-[100vh] flex  mt-3 md:mt-5 bg-gray-900/30"
+            >
+              <Link to={`/details/${item.id}`} key={item.id}>
                 <div className="flex justify-center">
                   <img
                     src={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
@@ -99,11 +116,15 @@ const Carousel = () => {
                     {item.name}
                   </h1>
                   <div className="flex flex-wrap items-center justify-center md:justify-start">
-                    {li.map((li) => (
-                      <button className="bg-white rounded-xl text-black text-sm font-bold mr-2 mt-5 py-2 px-2 hover:bg-gray-400">
-                        {li}
+                    {item?.genres.map((genre, i) => (
+                      <button
+                        className="bg-white rounded-xl text-black text-sm font-bold mr-2 mt-5 py-2 px-2 hover:bg-gray-400"
+                        key={genre.id}
+                      >
+                        {genre.name}
                       </button>
                     ))}
+
                     <div className="flex items-center pt-5 pl--0 md:pl-5 ">
                       <SlCalender size={20} />
                       <h1 className="text-xl px-5">{item.release_date}</h1>
