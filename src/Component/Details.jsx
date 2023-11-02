@@ -46,7 +46,7 @@ const Details = () => {
           /> */}
           <YouTube
             videoId={`https://api.themoviedb.org/3/movie/157336?${movieId}append_to_response=videos`}
-            className="border  w-full"
+            className="border  flex justify-center "
           />
 
           <div className="block md:flex mt-20 ">
