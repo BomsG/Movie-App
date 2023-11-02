@@ -8,10 +8,12 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Featured from "./Featured";
+import YouTube from "react-youtube";
 
 const Details = () => {
   const { movieId } = useParams();
   const accessToken = `eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxZWE5OTU3MTEyN2MzZWZkY2U2Mjk0ZGFkMTI3YTI1YyIsInN1YiI6IjY0ZmVjOWIwZGI0ZWQ2MTAzNDNlZjZjMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1Rd3o-_G81PdtVfr-TaM0AzlY8GjfwWpEUGcgHFlanI`;
+
   const [movies, setMovies] = useState([]);
   const headers = {
     Authorization: `Bearer ${accessToken}`,
@@ -38,9 +40,13 @@ const Details = () => {
       <div>
         <Navbar />
         <div className="mx-4 md:mx-[100px] mt-10">
-          <img
+          {/* <img
             src={`https://image.tmdb.org/t/p/original${movies?.backdrop_path}`}
             className="w-full h-[300px] md:h-[500px]"
+          /> */}
+          <YouTube
+            videoId={`https://api.themoviedb.org/3/movie/157336?${movieId}append_to_response=videos`}
+            className="border  "
           />
 
           <div className="block md:flex mt-20 ">
@@ -50,7 +56,7 @@ const Details = () => {
             />
             <div className="w-full mb-10 mt-5 md:mt-0">
               <div className="flex justify-between">
-                <h1>{`${movies?.title}`}</h1>
+                <h1>{`${movies?.name}`}</h1>
                 <button className="bg-[red] text-white font-bold py-2 px-2 flex items-center rounded-xl">
                   <AiOutlinePlus /> Add to favourite
                 </button>
