@@ -12,9 +12,25 @@ const Featured = () => {
   const [movies, setMovies] = useState([]);
   useEffect(() => {
     axios
-      .get("https://api.themoviedb.org/3/tv/popular", { headers })
+      .get("https://api.themoviedb.org/3/tv/top_rated", {
+        headers,
+      })
       .then((response) => {
-        setMovies(response.data.results.slice(0, 8));
+        const movie = response.data.results.slice(0, 5);
+
+        movie.map((item) => {
+          axios
+            .get(`https://api.themoviedb.org/3/tv/${item.id}?language=en-US`, {
+              headers,
+            })
+            .then((response) => {
+              console.log(response);
+              setMovies((prevMovie) => [...prevMovie, response.data]);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        });
       });
   }, []);
   const headers = {
@@ -27,15 +43,17 @@ const Featured = () => {
         <div className="grid grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 mt-5 ">
           {movies?.map((item, i) => (
             <div className="" key={i}>
-              <div className=" mr-5 hover:scale-105 ease-in-out duration-500 w-{500px} md:w-full">
-                <img
-                  src={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
-                  className="rounded-xl h-[150px] md:h-[250px] w-[300px] object-cover"
-                />
-                <h1 className="font-bold text-sm md:text-[15px]">
-                  {item.name}
-                </h1>
-              </div>
+              <Link to={`/details/${item.id}`} key={item.id}>
+                <div className=" mr-5 hover:scale-105 ease-in-out duration-500 w-{500px} md:w-full">
+                  <img
+                    src={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
+                    className="rounded-xl h-[150px] md:h-[250px] w-[300px] object-cover"
+                  />
+                  <h1 className="font-bold text-sm md:text-[15px]">
+                    {item.name}
+                  </h1>
+                </div>
+              </Link>
             </div>
           ))}
         </div>

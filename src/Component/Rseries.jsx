@@ -24,7 +24,7 @@ const Rseries = () => {
       <div className=" mx-3 md:mx-[150px] mt-10 mb-[50px]">
         <div className="flex mt-5">
           {movies?.map((item, i) => (
-            <div className="" key={i}>
+            <div className="">
               <div className="mr-5 hover:scale-105 ease-in-out duration-500 w-{500px} md:w-full">
                 <img
                   src={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}

@@ -12,9 +12,28 @@ const FullMovie = () => {
   const [movies, setMovies] = useState([]);
   useEffect(() => {
     axios
-      .get("https://api.themoviedb.org/3/movie/popular", { headers })
+      .get("https://api.themoviedb.org/3/movie/popular", {
+        headers,
+      })
       .then((response) => {
-        setMovies(response.data.results);
+        const movie = response.data.results;
+
+        movie.map((item) => {
+          axios
+            .get(
+              `https://api.themoviedb.org/3/movie/${item.id}?language=en-US`,
+              {
+                headers,
+              }
+            )
+            .then((response) => {
+              console.log(response);
+              setMovies((prevMovie) => [...prevMovie, response.data]);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        });
       });
   }, []);
   const headers = {
@@ -31,16 +50,22 @@ const FullMovie = () => {
             <AiOutlineArrowLeft /> Back
           </h2>
         </Link>
+
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-5 ">
           {movies?.map((item, i) => (
             <div className="" key={i}>
-              <div className=" mr-5 hover:scale-105 ease-in-out duration-500 w-{500px} md:w-full">
-                <img
-                  src={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
-                  className="rounded-xl h-[150px] md:h-[250px] w-[300px] object-cover"
-                />
-                <h1 className="font-bold text-xl">{item.title}</h1>
-              </div>
+              <Link to={`/detailsMovies/${item.id}`} key={item.id}>
+                <div className=" mr-5 hover:scale-105 ease-in-out duration-500 w-{500px} md:w-full">
+                  <img
+                    src={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
+                    className="rounded-xl h-[150px] md:h-[250px] w-[300px] object-cover"
+                  />
+                  <h1 className="font-bold text-sm md:text-[15px]">
+                    {item.title}
+                  </h1>
+                  <p>{item.description}</p>
+                </div>
+              </Link>
             </div>
           ))}
         </div>
