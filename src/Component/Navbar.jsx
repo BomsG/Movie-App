@@ -1,6 +1,7 @@
 import React from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { IoIosNotificationsOutline } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const list = ["Home", " Genre", "Country"];

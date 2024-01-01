@@ -8,17 +8,35 @@ import { Link } from "react-router-dom";
 const Recommended = () => {
   const accessToken = `eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxZWE5OTU3MTEyN2MzZWZkY2U2Mjk0ZGFkMTI3YTI1YyIsInN1YiI6IjY0ZmVjOWIwZGI0ZWQ2MTAzNDNlZjZjMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1Rd3o-_G81PdtVfr-TaM0AzlY8GjfwWpEUGcgHFlanI`;
   const [movies, setMovies] = useState([]);
-  useEffect(() => {
-    axios
-      .get("https://api.themoviedb.org/3/tv/popular", { headers })
-      .then((response) => {
-        setMovies(response.data.results.slice(0, 3));
-        console.log(response.data);
-      });
-  }, []);
   const headers = {
     Authorization: `Bearer ${accessToken}`,
   };
+  useEffect(() => {
+    axios
+      .get("https://api.themoviedb.org/3/movie/popular", {
+        headers,
+      })
+      .then((response) => {
+        const movie = response.data.results.slice(0, 3);
+
+        movie.map((item) => {
+          axios
+            .get(
+              `https://api.themoviedb.org/3/movie/${item.id}?language=en-US`,
+              {
+                headers,
+              }
+            )
+            .then((response) => {
+              console.log(response);
+              setMovies((prevMovie) => [...prevMovie, response.data]);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        });
+      });
+  }, []);
   const item = [];
   return (
     <>
@@ -43,28 +61,30 @@ const Recommended = () => {
           </Link>
         </div>
 
-        <div className="flex mt-5">
+        <div className="grid grid-cols-3 gap-4 mt-5">
           {movies?.map((item, i) => (
-            <div className="">
-              <div className="mr-5 hover:scale-105 ease-in-out duration-500 w-{500px} md:w-full">
-                <img
-                  src={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
-                  className="rounded-xl h-[150px] md:h-[250px] w-[300px] object-cover"
-                />
-                <div className="block md:flex justify-center md:justify-between mt-3 items-center ">
-                  <h1 className="mr-5 font-bold text-[8px] md:text-[14px] w-full">
-                    {item.name}
-                  </h1>
-                  <div className="flex items-center">
-                    <button className="bg-[red] rounded-lg text-white text-[5px] md:text-[8px] font-bold mr-2  py-1 px-3 hover:bg-gray-400">
-                      HD
-                    </button>
-                    <button className="bg-transparent border border-red-500 rounded-lg text-whie text-[5px] md:text-[8px] font-bold mr-2  py-2 px-2 hover:bg-gray-400">
-                      {item.first_air_date.slice(0, 4)}
-                    </button>
+            <div className="" key={i}>
+              <Link to={`/DetailsMovies/${item.id}`} key={item.id}>
+                <div className="mr-5 hover:scale-105 ease-in-out duration-500 w-{500px} md:w-full">
+                  <img
+                    src={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
+                    className="rounded-xl h-[150px] md:h-[250px] w-[300px] object-cover"
+                  />
+                  <div className="block md:flex justify-center md:justify-between mt-3 items-center ">
+                    <h1 className="mr-5 font-bold text-[8px] md:text-[15px] w-full">
+                      {item.title}
+                    </h1>
+                    <div className="flex items-center">
+                      <button className="bg-[red] rounded-lg text-white text-[5px] md:text-[10px] font-bold mr-2  py-1 px-3 hover:bg-gray-400">
+                        HD
+                      </button>
+                      <button className="bg-transparent border border-red-500 rounded-lg text-whie text-[5px] md:text-[8px] font-bold mr-2  py-2 px-2 hover:bg-gray-400">
+                        {item.release_date}
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             </div>
           ))}
         </div>

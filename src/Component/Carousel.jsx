@@ -52,7 +52,7 @@ const Carousel = () => {
   console.log(movies);
 
   const settings = {
-    dots: false,
+    dots: true,
     infinite: true,
     lazyLoad: true,
     speed: 500,

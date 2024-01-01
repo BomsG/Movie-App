@@ -32,7 +32,7 @@ const Series = () => {
           </Link>
         </div>
 
-        <div className="flex mt-5">
+        <div className="grid grid-cols-3 gap-4 mt-5">
           {movies?.map((item, i) => (
             <div className="">
               <div className="mr-5 hover:scale-105 ease-in-out duration-500 w-{500px} md:w-full">
@@ -41,14 +41,14 @@ const Series = () => {
                   className="rounded-xl h-[150px] md:h-[250px] w-[300px] object-cover"
                 />
                 <div className="block md:flex justify-center md:justify-between mt-3 items-center ">
-                  <h1 className="mr-5 font-bold text-[8px] md:text-[14px] w-full">
+                  <h1 className="mr-5 font-bold text-[8px] md:text-[15px] w-full">
                     {item.name}
                   </h1>
                   <div className="flex mt-3 items-center">
                     <button className="bg-[red] rounded-lg text-white text-[8px] font-bold mr-2  py-1 px-3 hover:bg-gray-400">
                       HD
                     </button>
-                    <button className="bg-transparent border border-red-500 rounded-lg text-whie text-[8px] font-bold mr-2  py-2 px-2 hover:bg-gray-400">
+                    <button className="bg-transparent border border-red-500 rounded-lg text-whie text-[10px] font-bold mr-2  py-2 px-2 hover:bg-gray-400">
                       Season_1
                     </button>
                   </div>

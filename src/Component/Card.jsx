@@ -31,7 +31,7 @@ const Card = () => {
             </h2>
           </Link>
         </div>
-        <div className="flex mt-5">
+        <div className="grid grid-cols-3 gap-4 mt-5">
           {movies?.map((item, i) => (
             <div className="">
               <div className="mr-5 hover:scale-105 ease-in-out duration-500 w-{500px}  md:w-full">
