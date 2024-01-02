@@ -34,21 +34,23 @@ const Main = () => {
                 {item.title}
               </h1>
             ))}
-            <div className="flex flex-wrap items-center">
-              {li.map((li) => (
+
+            {li.map((li) => (
+              <div className="flex flex-wrap items-center">
                 <button className="bg-white rounded-xl text-black text-sm font-bold mr-2 mt-5 py-2 px-2 hover:bg-gray-400">
                   {li}
                 </button>
-              ))}
-              <div className="flex items-center pt-5 pl--0 md:pl-5">
-                <SlCalender size={20} />
-                <h1 className="text-xl px-5">2022</h1>
-                <MdOutlineWatchLater size={20} />
-                <h1 className="px-4 text-xl">3:12:00</h1>
-                <AiOutlineStar size={20} />
-                <h1 className="px-4 text-xl">8.5</h1>
+                <div className="flex items-center pt-5 pl--0 md:pl-5">
+                  <SlCalender size={20} />
+                  <h1 className="text-xl px-5">2022</h1>
+                  <MdOutlineWatchLater size={20} />
+                  <h1 className="px-4 text-xl">3:12:00</h1>
+                  <AiOutlineStar size={20} />
+                  <h1 className="px-4 text-xl">8.5</h1>
+                </div>
               </div>
-            </div>
+            ))}
+
             {item.map((item) => (
               <p className="w-full md:w-[700px] text-sm md:text-lg pt-5 text-center md:text-left">
                 {item.description}

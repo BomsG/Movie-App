@@ -70,11 +70,11 @@ const DetailsMovies = () => {
                 </button>
                 <div className="flex items-center  md:pl-5 ">
                   <SlCalender size={10} />
-                  <h1 className="text-[10px] md:text-sm px-5">2020</h1>
+                  <h1 className="text-[10px] md:text-sm px-5">{`${movies?.first_air_date}`}</h1>
                   <MdOutlineWatchLater size={10} />
                   <h1 className="px-4 text-[10px] md:text-sm">15:30</h1>
                   <AiOutlineStar size={10} />
-                  <h1 className="px-4 text-[10px] md:text-sm">8.5</h1>
+                  <h1 className="px-4 text-[10px] md:text-sm">{`${movies?.vote_average}`}</h1>
                 </div>
               </div>
               <p className="pt-5 text-[15px]">{`${movies?.overview}`}</p>

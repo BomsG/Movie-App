@@ -3,6 +3,7 @@ import Main from "../images/main.jpg";
 import { useEffect, useState, Component } from "react";
 import Slider from "react-slick";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Update = () => {
   const accessToken = `eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxZWE5OTU3MTEyN2MzZWZkY2U2Mjk0ZGFkMTI3YTI1YyIsInN1YiI6IjY0ZmVjOWIwZGI0ZWQ2MTAzNDNlZjZjMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1Rd3o-_G81PdtVfr-TaM0AzlY8GjfwWpEUGcgHFlanI`;
@@ -14,9 +15,30 @@ const Update = () => {
 
   useEffect(() => {
     axios
-      .get("https://api.themoviedb.org/3/movie/popular", { headers })
+      .get("https://api.themoviedb.org/3/movie/popular", {
+        headers,
+      })
       .then((response) => {
-        setMovies(response.data.results.slice(0, 6));
+        const movie = response.data.results.slice(0, 3);
+
+        movie.map((item) => {
+          axios
+            .get(
+              `https://api.themoviedb.org/3/movie/${item.id}?language=en-US`,
+              {
+                headers,
+              }
+            )
+            .then((response) => {
+              console.log(response);
+              setMovies((prevMovie) =>
+                [...prevMovie, response.data].slice(0, 3)
+              );
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        });
       });
   }, []);
 
@@ -61,18 +83,23 @@ const Update = () => {
       <div className="ml-4 md:ml-[120px]">
         <h2 className="font-bold"> Recently Uploaded</h2>
 
-        <div className="my-4 flex ">
+        <div className="my-4 flex">
           {movies?.map((item, i) => (
-            <div className="flex mx-3 items-center" key={i}>
-              <img
-                src={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
-                className="w-[50px] h-[80px] rounded-xl object-cover"
-              />
-              <div className="ml-3 ">
-                <h1 className="text-[8px]">{item.title}</h1>
-                <p className="text-[8px]">{item.release_date}</p>
+            <Link to={`/DetailsMovies/${item.id}`} key={item.id}>
+              <div
+                className="w-full flex items-center mx-auto md:mx-10"
+                key={i}
+              >
+                <img
+                  src={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
+                  className="w-[50px] h-[80px] rounded-xl object-cover"
+                />
+                <div className="ml-3 ">
+                  <h1 className="text-[5px] md:[8px]">{item.title}</h1>
+                  <p className="text-[8px]">{item.release_date}</p>
+                </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
